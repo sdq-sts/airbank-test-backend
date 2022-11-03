@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+    dev:
+        container_name: airbank_api_dev
+        image: airbank-api-dev:0.0.1
+        build:
+            context: .
+            target: development
+            dockerfile: ./Dockerfile
+        command: npm run start:dev
+        ports:
+            - 5000:3000
+        depends_on:
+            - postgres
+        env_file:
+            - .env.dev
+        networks:
+            - airbank-network
+        volumes:
+            - .:/usr/src/app
+            - /usr/src/app/node_modules
+        restart: unless-stopped
+
+
+    postgres:
+        image: postgres:14.2
+        ports:
+            - 5432:5432
+        networks:
+            - airbank-network
+        depends_on:
+            - pgadmin
+        environment:
+            POSTGRES_USER: user
+            POSTGRES_PASSWORD: password123
+            POSTGRES_DB: task-management
+            PG_DATA: /var/lib/postgresql/data
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+
+
+    pgadmin:
+        container_name: pgadmin_container
+        image: dpage/pgadmin4
+        ports:
+            - "5500:80"
+        networks:
+            - airbank-network
+        restart: always
+        environment:
+            PGADMIN_DEFAULT_EMAIL: admin@admin.com
+            PGADMIN_DEFAULT_PASSWORD: root
+
+
+    prod:
+        container_name: airbank_api_prod
+        image: airbank-api-prod:0.0.1
+        build:
+            context: .
+            target: production
+            dockerfile: ./Dockerfile
+        command: npm run start:prod
+        ports:
+            - 3000:3000
+            - 9229:9229
+        networks:
+            - airbank-network
+        volumes:
+            - .:/usr/src/app
+            - /usr/src/app/node_modules
+        restart: unless-stopped
+
+networks:
+    airbank-network:
+volumes:
+    pgdata:
