@@ -1,15 +1,25 @@
+scalar UUID
+scalar DateTime
+
 type Transaction {
-  # Example field (placeholder)
-  exampleField: Int
+  id: UUID!
+  reference: String
+  category: String
+  amount: Int
+  createdAt: DateTime!
 }
 
 input CreateTransactionInput {
-  # Example field (placeholder)
-  exampleField: Int
+  reference: String
+  category: String
+  amount: Int
+  createdAt: DateTime!
 }
 
 input UpdateTransactionInput {
-  id: Int!
+  reference: String
+  category: String
+  amount: Int
 }
 
 type Query {

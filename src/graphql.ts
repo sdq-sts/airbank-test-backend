@@ -9,15 +9,24 @@
 /* eslint-disable */
 
 export class CreateTransactionInput {
-    exampleField?: Nullable<number>;
+    reference?: Nullable<string>;
+    category?: Nullable<string>;
+    amount?: Nullable<number>;
+    createdAt: DateTime;
 }
 
 export class UpdateTransactionInput {
-    id: number;
+    reference?: Nullable<string>;
+    category?: Nullable<string>;
+    amount?: Nullable<number>;
 }
 
 export class Transaction {
-    exampleField?: Nullable<number>;
+    id: UUID;
+    reference?: Nullable<string>;
+    category?: Nullable<string>;
+    amount?: Nullable<number>;
+    createdAt: DateTime;
 }
 
 export abstract class IQuery {
@@ -34,4 +43,6 @@ export abstract class IMutation {
     abstract removeTransaction(id: number): Nullable<Transaction> | Promise<Nullable<Transaction>>;
 }
 
+export type UUID = any;
+export type DateTime = any;
 type Nullable<T> = T | null;

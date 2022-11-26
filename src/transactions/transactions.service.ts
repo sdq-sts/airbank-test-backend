@@ -9,11 +9,11 @@ export class TransactionsService {
   }
 
   findAll() {
-    return `This action returns all transactions`;
+    return [{ exampleField: 1 }];
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} transaction`;
+    return { exampleField: id };
   }
 
   update(id: number, updateTransactionInput: UpdateTransactionInput) {
