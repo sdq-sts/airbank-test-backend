@@ -3,16 +3,14 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.account.deleteMany();
-  const anon = await prisma.account.create({
-    data: {
-      id: 'c5f3f93c-bf33-402e-a9f1-c15c148d451b',
-      name: 'Anonymous',
-      bank: 'iBank',
-    },
-  });
-
-  console.log(anon);
+  const deleteAccountData = prisma.account.deleteMany();
+  const deleteCategoryData = prisma.category.deleteMany();
+  const deleteTransactionsData = prisma.transaction.deleteMany();
+  await Promise.all([
+    deleteAccountData,
+    deleteCategoryData,
+    deleteTransactionsData,
+  ]);
 }
 
 main()
