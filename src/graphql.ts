@@ -10,9 +10,8 @@
 
 export class CreateTransactionInput {
     reference?: Nullable<string>;
-    category?: Nullable<string>;
     amount?: Nullable<number>;
-    createdAt: DateTime;
+    currency?: Nullable<string>;
 }
 
 export class UpdateTransactionInput {
@@ -24,9 +23,10 @@ export class UpdateTransactionInput {
 export class Transaction {
     id: UUID;
     reference?: Nullable<string>;
-    category?: Nullable<string>;
     amount?: Nullable<number>;
+    currency?: Nullable<string>;
     createdAt: DateTime;
+    updated_at: DateTime;
 }
 
 export abstract class IQuery {

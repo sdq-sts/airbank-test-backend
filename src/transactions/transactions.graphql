@@ -4,16 +4,16 @@ scalar DateTime
 type Transaction {
   id: UUID!
   reference: String
-  category: String
   amount: Int
+  currency: String
   createdAt: DateTime!
+  updated_at: DateTime!
 }
 
 input CreateTransactionInput {
   reference: String
-  category: String
-  amount: Int
-  createdAt: DateTime!
+  amount: Float
+  currency: String
 }
 
 input UpdateTransactionInput {
