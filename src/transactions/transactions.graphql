@@ -4,16 +4,10 @@ scalar DateTime
 type Transaction {
   id: UUID!
   reference: String
-  amount: Int
-  currency: String
-  createdAt: DateTime!
-  updated_at: DateTime!
-}
-
-input CreateTransactionInput {
-  reference: String
   amount: Float
   currency: String
+  created_at: DateTime!
+  updated_at: DateTime!
 }
 
 input UpdateTransactionInput {
@@ -23,12 +17,18 @@ input UpdateTransactionInput {
 }
 
 type Query {
-  transactions: [Transaction]!
-  transaction(id: Int!): Transaction
+  transactions(
+    cursor: String,
+    search: String,
+    bank: String,
+    account: String,
+    startDate: String,
+    endDate: String,
+    perPage: Int,
+  ): [Transaction]!
+  transaction(id: String!): Transaction
 }
 
 type Mutation {
-  createTransaction(createTransactionInput: CreateTransactionInput!): Transaction!
   updateTransaction(updateTransactionInput: UpdateTransactionInput!): Transaction!
-  removeTransaction(id: Int!): Transaction
 }

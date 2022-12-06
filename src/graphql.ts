@@ -8,12 +8,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export class CreateTransactionInput {
-    reference?: Nullable<string>;
-    amount?: Nullable<number>;
-    currency?: Nullable<string>;
-}
-
 export class UpdateTransactionInput {
     reference?: Nullable<string>;
     category?: Nullable<string>;
@@ -25,22 +19,18 @@ export class Transaction {
     reference?: Nullable<string>;
     amount?: Nullable<number>;
     currency?: Nullable<string>;
-    createdAt: DateTime;
+    created_at: DateTime;
     updated_at: DateTime;
 }
 
 export abstract class IQuery {
-    abstract transactions(): Nullable<Transaction>[] | Promise<Nullable<Transaction>[]>;
+    abstract transactions(cursor?: Nullable<string>, search?: Nullable<string>, bank?: Nullable<string>, account?: Nullable<string>, startDate?: Nullable<string>, endDate?: Nullable<string>, perPage?: Nullable<number>): Nullable<Transaction>[] | Promise<Nullable<Transaction>[]>;
 
-    abstract transaction(id: number): Nullable<Transaction> | Promise<Nullable<Transaction>>;
+    abstract transaction(id: string): Nullable<Transaction> | Promise<Nullable<Transaction>>;
 }
 
 export abstract class IMutation {
-    abstract createTransaction(createTransactionInput: CreateTransactionInput): Transaction | Promise<Transaction>;
-
     abstract updateTransaction(updateTransactionInput: UpdateTransactionInput): Transaction | Promise<Transaction>;
-
-    abstract removeTransaction(id: number): Nullable<Transaction> | Promise<Nullable<Transaction>>;
 }
 
 export type UUID = any;

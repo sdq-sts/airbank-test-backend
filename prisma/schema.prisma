@@ -2,15 +2,27 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator nestgraphql {
+  provider               = "node node_modules/prisma-nestjs-graphql"
+  output                 = "../src/@generated"
+  fields_Validator_from  = "class-validator"
+  fields_Validator_input = true
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Account {
-  id           String        @id @default(uuid())
-  name         String
-  bank         String
+  id String @id @default(uuid())
+
+  /// @Validator.Length(3, 20)
+  name String
+
+  /// @Validator.Length(3, 20)
+  bank String
+
   created_at   DateTime      @default(now())
   updated_at   DateTime?     @updatedAt
   transactions Transaction[]
@@ -19,9 +31,15 @@ model Account {
 }
 
 model Category {
-  id           String        @id @default(uuid())
-  name         String
-  color        String?
+  id String @id @default(uuid())
+
+  /// @Validator.IsNotEmpty()
+  /// @Validator.Length(3, 20)
+  name String
+
+  /// @Validator.Length(3, 6)
+  color String?
+
   created_at   DateTime      @default(now())
   updated_at   DateTime?     @updatedAt
   transactions Transaction[]
@@ -35,11 +53,17 @@ model Transaction {
   account_id  String
   category    Category? @relation(fields: [category_id], references: [id])
   category_id String?
-  reference   String?
-  amount      Float
-  currency    String
-  created_at  DateTime  @default(now())
-  updated_at  DateTime? @updatedAt
+
+  /// Validator.IsOptional()
+  reference String?
+
+  /// Validator.IsDecimal({ decimal_digits: 2, locale: 'en-US' })
+  amount Float
+
+  /// Validator.Length(3)
+  currency   String
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
 
   @@map("transactions")
 }

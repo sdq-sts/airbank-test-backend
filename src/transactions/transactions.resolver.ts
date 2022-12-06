@@ -1,43 +1,47 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { TransactionsService } from './transactions.service';
-import { CreateTransactionInput } from './dto/create-transaction.input';
-import { UpdateTransactionInput } from './dto/update-transaction.input';
+import { FindAllParams, TransactionsService } from './transactions.service';
 
 @Resolver('Transaction')
 export class TransactionsResolver {
   constructor(private readonly transactionsService: TransactionsService) {}
 
-  @Mutation('createTransaction')
-  create(
-    @Args('createTransactionInput')
-    createTransactionInput: CreateTransactionInput,
-  ) {
-    return this.transactionsService.create(createTransactionInput);
-  }
-
   @Query('transactions')
-  findAll() {
-    return this.transactionsService.findAll();
+  async findAll(
+    @Args('cursor') cursor: string,
+    @Args('search') search: string,
+    @Args('bank') bank: string,
+    @Args('account') account: string,
+    @Args('startDate') startDate: string,
+    @Args('endDate') endDate: string,
+    @Args('perPage') perPage: number,
+  ) {
+    const params: FindAllParams = {
+      cursor,
+      search,
+      bank,
+      account,
+      startDate,
+      endDate,
+      perPage,
+    };
+
+    return this.transactionsService.findAll(params);
   }
 
   @Query('transaction')
-  findOne(@Args('id') id: number) {
-    return this.transactionsService.findOne(id);
+  findOne(@Args('id') id: string) {
+    return this.transactionsService.findOne({ id });
   }
 
   @Mutation('updateTransaction')
   update(
     @Args('updateTransactionInput')
-    updateTransactionInput: UpdateTransactionInput,
+    updateTransactionInput /*UpdateTransactionInput,*/,
   ) {
-    return this.transactionsService.update(
-      updateTransactionInput.id,
-      updateTransactionInput,
-    );
-  }
-
-  @Mutation('removeTransaction')
-  remove(@Args('id') id: number) {
-    return this.transactionsService.remove(id);
+    return this.transactionsService
+      .update
+      // updateTransactionInput.id,
+      // updateTransactionInput,
+      ();
   }
 }

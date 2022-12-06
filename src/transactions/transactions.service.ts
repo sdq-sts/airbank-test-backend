@@ -1,26 +1,65 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTransactionInput } from './dto/create-transaction.input';
-import { UpdateTransactionInput } from './dto/update-transaction.input';
+import { Prisma } from '@prisma/client';
+import { PrismaService } from '../../prisma/prisma.service';
 
+export type FindAllParams = {
+  cursor: string;
+  search: string;
+  bank: string;
+  account: string;
+  startDate: string;
+  endDate: string;
+  perPage: number;
+};
 @Injectable()
 export class TransactionsService {
-  create(createTransactionInput: CreateTransactionInput) {
-    return 'This action adds a new transaction';
+  constructor(private prisma: PrismaService) {}
+
+  async findAll(params: FindAllParams) {
+    const findManyArgs: Prisma.TransactionFindManyArgs = {
+      take: params.perPage || 20,
+      orderBy: { created_at: 'desc' },
+      include: { account: true, category: true },
+    };
+
+    if (params.cursor) {
+      findManyArgs.skip = 1;
+      findManyArgs.where = { created_at: { lte: params.cursor } };
+    }
+
+    if (params.search) {
+      findManyArgs.where = {
+        ...findManyArgs.where,
+        ...{
+          OR: [
+            { reference: { contains: params.search, mode: 'insensitive' } },
+            { currency: { contains: params.search, mode: 'insensitive' } },
+            { amount: { equals: +params.search } },
+            {
+              account: {
+                bank: { contains: params.search, mode: 'insensitive' },
+              },
+            },
+            {
+              category: {
+                name: { contains: params.search, mode: 'insensitive' },
+              },
+            },
+          ],
+        },
+      };
+    }
+
+    return this.prisma.transaction.findMany(findManyArgs);
   }
 
-  findAll() {
-    return [{ exampleField: 1 }];
+  findOne(transactionWhereUniqueInput: Prisma.TransactionWhereUniqueInput) {
+    return this.prisma.transaction.findUnique({
+      where: transactionWhereUniqueInput,
+    });
   }
 
-  findOne(id: number) {
-    return { exampleField: id };
-  }
-
-  update(id: number, updateTransactionInput: UpdateTransactionInput) {
-    return `This action updates a #${id} transaction`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} transaction`;
+  update(/*id: number, updateTransactionInput: UpdateTransactionInput*/) {
+    return `This action updates a #id transaction`;
   }
 }
