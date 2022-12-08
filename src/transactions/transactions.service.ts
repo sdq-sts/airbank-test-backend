@@ -2,13 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { TransactionWhereUniqueInput } from 'src/@generated/transaction/transaction-where-unique.input';
 import { PrismaService } from '../../prisma/prisma.service';
-import { FindAllDto } from './dto/find-all.dto';
+import { FindAllTransactionsDto } from './dto/find-all.dto';
+import { UpdateTransactionDto } from './dto/update.dto';
 
 @Injectable()
 export class TransactionsService {
   constructor(private prisma: PrismaService) {}
 
-  async findAll(params: FindAllDto) {
+  async findAll(params: FindAllTransactionsDto) {
     const findManyArgs: Prisma.TransactionFindManyArgs = {
       take: params.perPage || 20,
       orderBy: { created_at: 'desc' },
@@ -72,7 +73,12 @@ export class TransactionsService {
     });
   }
 
-  update(/*id: number, updateTransactionInput: UpdateTransactionInput*/) {
-    return `This action updates a #id transaction`;
+  update(transactionInput: UpdateTransactionDto) {
+    const { updateTransactionInput } = transactionInput;
+
+    return this.prisma.transaction.update({
+      where: { id: updateTransactionInput.id },
+      data: updateTransactionInput.data,
+    });
   }
 }

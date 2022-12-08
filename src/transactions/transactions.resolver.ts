@@ -1,5 +1,7 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { FindAllDto } from './dto/find-all.dto';
+import { FindAllTransactionsDto } from './dto/find-all.dto';
+import { FindOneDto } from './dto/find-one.dto';
+import { UpdateTransactionDto } from './dto/update.dto';
 import { TransactionsService } from './transactions.service';
 
 @Resolver('Transaction')
@@ -7,37 +9,17 @@ export class TransactionsResolver {
   constructor(private readonly transactionsService: TransactionsService) {}
 
   @Query('transactions')
-  async findAll(
-    @Args()
-    { cursor, search, bank, account, startDate, endDate, perPage }: FindAllDto,
-  ) {
-    const params = {
-      cursor,
-      search,
-      bank,
-      account,
-      startDate,
-      endDate,
-      perPage,
-    };
-
-    return this.transactionsService.findAll(params);
+  async findAll(@Args() findAllArgs: FindAllTransactionsDto) {
+    return this.transactionsService.findAll(findAllArgs);
   }
 
   @Query('transaction')
-  findOne(@Args('id') id: string) {
+  findOne(@Args() { id }: FindOneDto) {
     return this.transactionsService.findOne({ id });
   }
 
   @Mutation('updateTransaction')
-  update(
-    @Args('updateTransactionInput')
-    updateTransactionInput /*UpdateTransactionInput,*/,
-  ) {
-    return this.transactionsService
-      .update
-      // updateTransactionInput.id,
-      // updateTransactionInput,
-      ();
+  update(@Args() updateTransactionInput: UpdateTransactionDto) {
+    return this.transactionsService.update(updateTransactionInput);
   }
 }

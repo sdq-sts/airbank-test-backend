@@ -10,7 +10,7 @@ import {
 } from 'class-validator';
 
 @ArgsType()
-export class FindAllDto {
+export class FindAllTransactionsDto {
   @Field({ nullable: true, defaultValue: null })
   @IsDateString()
   cursor?: string;

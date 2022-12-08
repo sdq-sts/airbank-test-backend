@@ -8,10 +8,16 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export class UpdateTransactionInput {
+export class UpdateTransactionData {
     reference?: Nullable<string>;
-    category?: Nullable<string>;
     amount?: Nullable<number>;
+    currency?: Nullable<string>;
+    category?: Nullable<UUID>;
+}
+
+export class UpdateTransactionInput {
+    id: UUID;
+    data?: Nullable<UpdateTransactionData>;
 }
 
 export class Account {

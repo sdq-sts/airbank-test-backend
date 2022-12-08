@@ -28,10 +28,16 @@ type Transaction {
   updated_at: DateTime!
 }
 
-input UpdateTransactionInput {
+input UpdateTransactionData {
   reference: String
-  category: String
-  amount: Int
+  amount: Float
+  currency: String
+  category: UUID
+}
+
+input UpdateTransactionInput {
+  id: UUID!
+  data: UpdateTransactionData
 }
 
 type Query {

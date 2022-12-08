@@ -25,14 +25,15 @@ export class Transaction {
 
     /**
      * Validator.IsOptional()
+     * Validator.Length(50)
      */
-    @Field(() => String, {nullable:true,description:'Validator.IsOptional()'})
+    @Field(() => String, {nullable:true,description:'Validator.IsOptional()\nValidator.Length(50)'})
     reference!: string | null;
 
     /**
-     * Validator.IsDecimal({ decimal_digits: 2, locale: 'en-US' })
+     * Validator.IsNumber({ maxDecimalPlaces: 2 })
      */
-    @Field(() => Float, {nullable:false,description:"Validator.IsDecimal({ decimal_digits: 2, locale: 'en-US' })"})
+    @Field(() => Float, {nullable:false,description:'Validator.IsNumber({ maxDecimalPlaces: 2 })'})
     amount!: number;
 
     /**
