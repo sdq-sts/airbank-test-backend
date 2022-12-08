@@ -14,11 +14,29 @@ export class UpdateTransactionInput {
     amount?: Nullable<number>;
 }
 
+export class Account {
+    id: UUID;
+    name?: Nullable<string>;
+    bank?: Nullable<string>;
+    created_at: DateTime;
+    updated_at: DateTime;
+}
+
+export class Category {
+    id: UUID;
+    name?: Nullable<string>;
+    color?: Nullable<string>;
+    created_at: DateTime;
+    updated_at: DateTime;
+}
+
 export class Transaction {
     id: UUID;
     reference?: Nullable<string>;
     amount?: Nullable<number>;
     currency?: Nullable<string>;
+    account?: Nullable<Account>;
+    category?: Nullable<Category>;
     created_at: DateTime;
     updated_at: DateTime;
 }

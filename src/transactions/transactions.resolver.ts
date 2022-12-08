@@ -1,5 +1,6 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { FindAllParams, TransactionsService } from './transactions.service';
+import { FindAllDto } from './dto/find-all.dto';
+import { TransactionsService } from './transactions.service';
 
 @Resolver('Transaction')
 export class TransactionsResolver {
@@ -7,15 +8,10 @@ export class TransactionsResolver {
 
   @Query('transactions')
   async findAll(
-    @Args('cursor') cursor: string,
-    @Args('search') search: string,
-    @Args('bank') bank: string,
-    @Args('account') account: string,
-    @Args('startDate') startDate: string,
-    @Args('endDate') endDate: string,
-    @Args('perPage') perPage: number,
+    @Args()
+    { cursor, search, bank, account, startDate, endDate, perPage }: FindAllDto,
   ) {
-    const params: FindAllParams = {
+    const params = {
       cursor,
       search,
       bank,

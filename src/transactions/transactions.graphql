@@ -1,11 +1,29 @@
 scalar UUID
 scalar DateTime
 
+type Account {
+  id: UUID!
+  name: String
+  bank: String
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type Category {
+  id: UUID!
+  name: String
+  color: String
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
 type Transaction {
   id: UUID!
   reference: String
   amount: Float
   currency: String
+  account: Account
+  category: Category
   created_at: DateTime!
   updated_at: DateTime!
 }
