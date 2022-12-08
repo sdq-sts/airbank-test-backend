@@ -8,6 +8,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export class CreateCategoryInput {
+    name?: Nullable<string>;
+    color?: Nullable<string>;
+}
+
 export class UpdateTransactionData {
     reference?: Nullable<string>;
     amount?: Nullable<number>;
@@ -20,18 +25,34 @@ export class UpdateTransactionInput {
     data?: Nullable<UpdateTransactionData>;
 }
 
-export class Account {
-    id: UUID;
+export class Category {
     name?: Nullable<string>;
-    bank?: Nullable<string>;
+    color?: Nullable<string>;
+    id: UUID;
     created_at: DateTime;
     updated_at: DateTime;
 }
 
-export class Category {
+export abstract class IQuery {
+    abstract categories(): Nullable<Category>[] | Promise<Nullable<Category>[]>;
+
+    abstract category(id: string): Nullable<Category> | Promise<Nullable<Category>>;
+
+    abstract transactions(cursor?: Nullable<string>, search?: Nullable<string>, bank?: Nullable<string>, account?: Nullable<string>, startDate?: Nullable<string>, endDate?: Nullable<string>, perPage?: Nullable<number>): Nullable<Transaction>[] | Promise<Nullable<Transaction>[]>;
+
+    abstract transaction(id: string): Nullable<Transaction> | Promise<Nullable<Transaction>>;
+}
+
+export abstract class IMutation {
+    abstract createCategory(createCategoryInput: CreateCategoryInput): Category | Promise<Category>;
+
+    abstract updateTransaction(updateTransactionInput: UpdateTransactionInput): Transaction | Promise<Transaction>;
+}
+
+export class Account {
     id: UUID;
     name?: Nullable<string>;
-    color?: Nullable<string>;
+    bank?: Nullable<string>;
     created_at: DateTime;
     updated_at: DateTime;
 }
@@ -45,16 +66,6 @@ export class Transaction {
     category?: Nullable<Category>;
     created_at: DateTime;
     updated_at: DateTime;
-}
-
-export abstract class IQuery {
-    abstract transactions(cursor?: Nullable<string>, search?: Nullable<string>, bank?: Nullable<string>, account?: Nullable<string>, startDate?: Nullable<string>, endDate?: Nullable<string>, perPage?: Nullable<number>): Nullable<Transaction>[] | Promise<Nullable<Transaction>[]>;
-
-    abstract transaction(id: string): Nullable<Transaction> | Promise<Nullable<Transaction>>;
-}
-
-export abstract class IMutation {
-    abstract updateTransaction(updateTransactionInput: UpdateTransactionInput): Transaction | Promise<Transaction>;
 }
 
 export type UUID = any;

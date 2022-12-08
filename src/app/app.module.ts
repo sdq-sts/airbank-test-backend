@@ -6,6 +6,7 @@ import { TransactionsModule } from 'src/transactions/transactions.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UUIDResolver, DateTimeResolver } from 'graphql-scalars';
+import { CategoriesModule } from 'src/categories/categories.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { UUIDResolver, DateTimeResolver } from 'graphql-scalars';
       debug: true,
     }),
     TransactionsModule,
+    CategoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
