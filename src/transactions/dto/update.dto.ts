@@ -1,4 +1,4 @@
-import { ArgsType, Field } from '@nestjs/graphql';
+import { ArgsType } from '@nestjs/graphql';
 import {
   IsNumber,
   IsObject,
@@ -27,7 +27,7 @@ class UpdateTransactionDataDto {
 }
 
 @ArgsType()
-class UpdateTransactionInput {
+export class UpdateTransactionDto {
   @IsUUID('all')
   id!: string;
 
@@ -35,13 +35,4 @@ class UpdateTransactionInput {
   @ValidateNested()
   @Type(() => UpdateTransactionDataDto)
   data: UpdateTransactionDataDto;
-}
-
-@ArgsType()
-export class UpdateTransactionDto {
-  @Field()
-  @IsObject()
-  @ValidateNested()
-  @Type(() => UpdateTransactionInput)
-  updateTransactionInput: UpdateTransactionInput;
 }

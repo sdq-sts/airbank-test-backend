@@ -19,7 +19,10 @@ export class TransactionsResolver {
   }
 
   @Mutation('updateTransaction')
-  update(@Args() updateTransactionInput: UpdateTransactionDto) {
+  update(
+    @Args('updateTransactionInput')
+    updateTransactionInput: UpdateTransactionDto,
+  ) {
     return this.transactionsService.update(updateTransactionInput);
   }
 }

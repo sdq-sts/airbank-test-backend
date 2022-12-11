@@ -73,9 +73,7 @@ export class TransactionsService {
     });
   }
 
-  update(transactionInput: UpdateTransactionDto) {
-    const { updateTransactionInput } = transactionInput;
-
+  update(updateTransactionInput: UpdateTransactionDto) {
     return this.prisma.transaction.update({
       where: { id: updateTransactionInput.id },
       data: updateTransactionInput.data,
