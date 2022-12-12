@@ -2,6 +2,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "../ERD.svg"
+}
+
 generator nestgraphql {
   provider               = "node node_modules/prisma-nestjs-graphql"
   output                 = "../src/@generated"
@@ -17,10 +22,10 @@ datasource db {
 model Account {
   id String @id @default(uuid())
 
-  /// @Validator.Length(3, 20)
+  /// @Validator.Length(3, 40)
   name String
 
-  /// @Validator.Length(3, 20)
+  /// @Validator.Length(3, 40)
   bank String
 
   created_at   DateTime      @default(now())
@@ -34,7 +39,7 @@ model Category {
   id String @id @default(uuid())
 
   /// @Validator.IsNotEmpty()
-  /// @Validator.Length(3, 20)
+  /// @Validator.Length(3, 40)
   name String
 
   /// @Validator.Length(3, 6)

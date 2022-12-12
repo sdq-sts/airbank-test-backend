@@ -10,7 +10,7 @@ export class CategoryCreateManyInput {
 
     @Field(() => String, {nullable:false})
     @Validator.IsNotEmpty()
-    @Validator.Length(3, 20)
+    @Validator.Length(3, 40)
     name!: string;
 
     @Field(() => String, {nullable:true})

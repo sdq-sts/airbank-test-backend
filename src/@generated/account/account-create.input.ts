@@ -10,11 +10,11 @@ export class AccountCreateInput {
     id?: string;
 
     @Field(() => String, {nullable:false})
-    @Validator.Length(3, 20)
+    @Validator.Length(3, 40)
     name!: string;
 
     @Field(() => String, {nullable:false})
-    @Validator.Length(3, 20)
+    @Validator.Length(3, 40)
     bank!: string;
 
     @Field(() => Date, {nullable:true})
