@@ -3,6 +3,8 @@
 ## Description
 This repository contains code for the test of fullstack developer at Friday Finance
 
+Steps to reproduce the **frontend** are [here](https://github.com/sdq-sts/airbank-test-frontend)
+
 ## Technologies used
 
 <p align="center">
@@ -19,7 +21,13 @@ You need to have [Docker](https://www.docker.com/) and `docker-compose` installe
 
 ## Steps
 
-1. First you need to build and run this image with:
+0. Copy the `.env.example` to `.env`:
+
+```bash
+cp .env.example .env
+```
+
+1. Then you need to build and run this image with:
 
 ```bash
 docker-compose up prod
@@ -37,8 +45,9 @@ docker-compose exec prod npx prisma migrate dev
 docker-compose exec prod npx prisma db seed
 ```
 
-Done, your server is ready!
+4. Go to `localhost:3000/status` and you should see a `OK` message. To use the graphql playground go to `localhost:3000/graphql` 
 
+*Done, your server is ready!*
 ## Database model
 
 The database model looks like this:
