@@ -5,14 +5,24 @@ This repository contains code for the test of fullstack developer at Friday Fina
 
 Steps to reproduce the **frontend** are [here](https://github.com/sdq-sts/airbank-test-frontend)
 
-## Technologies used
+## Technologies
 
 <p align="center">
-  <a href="https://www.docker.com/" target="blank"><img src="assets/docker-logo.png" width="50" alt="Docker Logo" /></a>
-  <a href="http://nestjs.com/" target="blank"><img src="assets/nestjs-logo.svg" width="50" alt="Nest Logo" /></a>
-  <a href="https://www.postgresql.org/" target="blank"><img src="assets/postgres-logo.png" width="50" alt="Postgres Logo" /></a>
-  <a href="https://www.prisma.io/" target="blank"><img src="assets/prisma-logo.svg" width="50" height="50" alt="Prisma Logo" /></a>
-  <a href="https://graphql.org/" target="blank"><img src="assets/graphql-logo.png" width="50" alt="Graphql Logo" /></a>
+  <a href="https://www.docker.com/" target="blank">
+    <img src="assets/docker-logo.png" width="75" height="75" alt="Docker Logo" />
+  </a>
+  <a href="http://nestjs.com/" target="blank">
+    <img src="assets/nestjs-logo.svg" width="75" height="75" alt="Nest Logo" />
+  </a>
+  <a href="https://www.postgresql.org/" target="blank">
+    <img src="assets/postgres-logo.png" width="75" alt="Postgres Logo" />
+  </a>
+  <a href="https://www.prisma.io/" target="blank">
+    <img src="assets/prisma-logo.svg" width="75" height="75" alt="Prisma Logo" />
+  </a>
+  <a href="https://graphql.org/" target="blank">
+    <img src="assets/graphql-logo.png" width="75" height="75" alt="Graphql Logo"/>
+  </a>
 </p>
 
 ## Dependencies
