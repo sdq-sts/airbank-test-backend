@@ -9,23 +9,29 @@ import { UUIDResolver, DateTimeResolver } from 'graphql-scalars';
 import { ConfigModule } from '@nestjs/config';
 import { CategoriesModule } from 'src/categories/categories.module';
 
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
+
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       cache: 'bounded',
       typePaths: ['./**/*.graphql'],
-      playground: false,
-      plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      introspection: !IS_PRODUCTION,
+      playground: IS_PRODUCTION,
+      plugins: [
+        ...(IS_DEVELOPMENT
+          ? [ApolloServerPluginLandingPageLocalDefault()]
+          : []),
+      ],
       resolvers: {
         UUID: UUIDResolver,
         DateTime: DateTimeResolver,
       },
       debug: false,
     }),
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
+    ConfigModule.forRoot({ isGlobal: true }),
     TransactionsModule,
     CategoriesModule,
   ],
