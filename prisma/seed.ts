@@ -182,7 +182,7 @@ async function main() {
     [...transactionCSVData],
     CHUNK_SIZE,
   );
-  let amountAddedToDatabase = 0;
+  let recordsAddedToDatabase = 0;
 
   for (const chunk of transactionChunks) {
     const promises: Promise<TransactionRow>[] = chunk.map(
@@ -190,9 +190,9 @@ async function main() {
         prisma.transaction.create({ data: transactionData }),
     );
     const result = await Promise.all(promises);
-    amountAddedToDatabase += result.length;
+    recordsAddedToDatabase += result.length;
     console.log(
-      `${amountAddedToDatabase} of ${transactionCSVData.length} records added to the database`,
+      `${recordsAddedToDatabase} of ${transactionCSVData.length} records added to the database`,
     );
   }
 

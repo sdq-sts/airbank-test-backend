@@ -1,32 +1,51 @@
-FROM node:18 AS development
+##################
+# DEVELOPMENT
+##################
 
+FROM node:lts-buster-slim AS development
+
+RUN apt-get update && apt-get install libssl-dev ca-certificates -y
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY package*.json yarn.lock ./
 
-RUN npm install -g npm glob rimraf prisma
+RUN yarn add -g glob rimraf prisma
 
-RUN npm install
+RUN yarn install
 
 COPY . .
 
-RUN npm run build
+ENV NODE_ENV development
 
-FROM node:14 as production
+RUN yarn prisma:gen
 
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
+RUN yarn build
 
+
+
+
+
+##################
+# PRODUCTION
+##################
+
+FROM node:lts-buster-slim AS production
+
+RUN apt-get update && apt-get install libssl-dev ca-certificates -y
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY package*.json yarn.lock ./
 
-RUN npm install -g npm nest rimraf @nestjs/cli
+RUN yarn add -g glob rimraf prisma
 
-RUN npm install --only=production 
+RUN yarn install
 
 COPY . .
 
-RUN npm run build
+ENV NODE_ENV production
 
-CMD ["node", "dist/main"]
+RUN yarn prisma:gen
+
+RUN yarn build
+
+CMD ["yarn", "start:prod"]

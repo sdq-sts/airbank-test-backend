@@ -6,12 +6,14 @@ import { TransactionsModule } from 'src/transactions/transactions.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UUIDResolver, DateTimeResolver } from 'graphql-scalars';
+import { ConfigModule } from '@nestjs/config';
 import { CategoriesModule } from 'src/categories/categories.module';
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+      cache: 'bounded',
       typePaths: ['./**/*.graphql'],
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
@@ -19,7 +21,10 @@ import { CategoriesModule } from 'src/categories/categories.module';
         UUID: UUIDResolver,
         DateTime: DateTimeResolver,
       },
-      debug: true,
+      debug: false,
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true,
     }),
     TransactionsModule,
     CategoriesModule,

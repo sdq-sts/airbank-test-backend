@@ -8,13 +8,13 @@ services:
             context: .
             target: development
             dockerfile: ./Dockerfile
-        command: npm run dev
+        command: yarn start:dev
+        env_file:
+            - ".env"
         ports:
-            - 5000:3000
+            - ${SERVER_PORT}:${SERVER_PORT}
         depends_on:
             - postgres
-        env_file:
-            - .env
         networks:
             - airbank-network
         volumes:
@@ -28,14 +28,21 @@ services:
         image: postgres:14.2
         ports:
             - 5432:5432
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U postgres"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
         networks:
             - airbank-network
         depends_on:
             - pgadmin
+        env_file:
+            - ".env"
         environment:
-            POSTGRES_USER: user
-            POSTGRES_PASSWORD: password123
-            POSTGRES_DB: airbank-db
+            POSTGRES_USER: ${DB_USER}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB_DATABASE}
             PG_DATA: /var/lib/postgresql/data
         volumes:
             - pgdata:/var/lib/postgresql/data
@@ -48,10 +55,12 @@ services:
             - "5500:80"
         networks:
             - airbank-network
+        env_file:
+            - ".env"
         restart: always
         environment:
-            PGADMIN_DEFAULT_EMAIL: admin@admin.com
-            PGADMIN_DEFAULT_PASSWORD: root
+            PGADMIN_DEFAULT_EMAIL: ${PG_EMAIL}
+            PGADMIN_DEFAULT_PASSWORD: ${PG_PASSWORD}
 
 
     prod:
@@ -61,15 +70,17 @@ services:
             context: .
             target: production
             dockerfile: ./Dockerfile
-        command: npm run start:prod
+        command: yarn start:prod
         ports:
-            - 3000:3000
+            - ${SERVER_PORT}:${SERVER_PORT}
             - 9229:9229
+        env_file:
+            - .env
         networks:
             - airbank-network
-        volumes:
-            - .:/usr/src/app
-            - /usr/src/app/node_modules
+        depends_on:
+            postgres:
+                condition: service_healthy
         restart: unless-stopped
 
 networks:
