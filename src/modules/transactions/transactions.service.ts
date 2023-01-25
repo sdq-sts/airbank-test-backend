@@ -70,6 +70,7 @@ export class TransactionsService {
   findOne(transactionWhereUniqueInput: TransactionWhereUniqueInput) {
     return this.prisma.transaction.findUnique({
       where: transactionWhereUniqueInput,
+      include: { account: true, category: true },
     });
   }
 
