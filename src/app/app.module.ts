@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { UUIDResolver, DateTimeResolver } from 'graphql-scalars';
 import { ConfigModule } from '@nestjs/config';
 import { CategoriesModule } from 'src/categories/categories.module';
+import { AccountsModule } from 'src/accounts/accounts.module';
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
@@ -34,6 +35,7 @@ const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
     ConfigModule.forRoot({ isGlobal: true }),
     TransactionsModule,
     CategoriesModule,
+    AccountsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

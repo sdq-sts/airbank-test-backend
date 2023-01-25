@@ -1,0 +1,12 @@
+type Account {
+  id: UUID!
+  name: String
+  bank: String
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type Query {
+  accounts: [Account]!
+  account(id: Int!): Account
+}

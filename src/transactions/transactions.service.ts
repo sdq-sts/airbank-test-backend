@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { TransactionWhereUniqueInput } from 'src/@generated/transaction/transaction-where-unique.input';
-import { PrismaService } from '../../prisma/prisma.service';
+import { PrismaService } from 'prisma/prisma.service';
 import { FindAllTransactionsDto } from './dto/find-all.dto';
 import { UpdateTransactionDto } from './dto/update.dto';
 

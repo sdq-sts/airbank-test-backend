@@ -22,9 +22,6 @@ RUN yarn prisma:gen
 RUN yarn build
 
 
-
-
-
 ##################
 # PRODUCTION
 ##################
