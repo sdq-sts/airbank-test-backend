@@ -2,13 +2,13 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
-import { TransactionsModule } from 'src/transactions/transactions.module';
+import { TransactionsModule } from 'src/modules/transactions/transactions.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UUIDResolver, DateTimeResolver } from 'graphql-scalars';
 import { ConfigModule } from '@nestjs/config';
-import { CategoriesModule } from 'src/categories/categories.module';
-import { AccountsModule } from 'src/accounts/accounts.module';
+import { CategoriesModule } from 'src/modules/categories/categories.module';
+import { AccountsModule } from 'src/modules/accounts/accounts.module';
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
