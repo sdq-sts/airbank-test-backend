@@ -1,6 +1,7 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
+import { FindAllCategoriesDto } from './dto/find-all.dto';
 import { FindOneDto } from './dto/find-one.dto';
 
 @Resolver('Category')
@@ -13,8 +14,11 @@ export class CategoriesResolver {
   }
 
   @Query('categories')
-  findAll() {
-    return this.categoriesService.findAll();
+  findAll(
+    @Args('search')
+    search: FindAllCategoriesDto,
+  ) {
+    return this.categoriesService.findAll(search);
   }
 
   @Query('category')

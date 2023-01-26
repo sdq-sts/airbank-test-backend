@@ -23,7 +23,7 @@ class UpdateTransactionDataDto {
   currency?: string;
 
   @IsUUID('all')
-  category?: any;
+  category_id?: any;
 }
 
 @ArgsType()

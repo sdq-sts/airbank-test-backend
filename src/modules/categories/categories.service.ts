@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { FindOneDto } from './dto/find-one.dto';
+import { FindAllCategoriesDto } from './dto/find-all.dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class CategoriesService {
@@ -11,8 +13,15 @@ export class CategoriesService {
     return this.prisma.category.create({ data: createCategoryInput });
   }
 
-  findAll() {
-    return this.prisma.category.findMany();
+  findAll(search: FindAllCategoriesDto) {
+    const categorySearch = (search || '') as unknown;
+    const args: Prisma.CategoryFindManyArgs = {
+      where: {
+        name: { contains: categorySearch as string, mode: 'insensitive' },
+      },
+    };
+
+    return this.prisma.category.findMany(args);
   }
 
   findOne(categoryFindUniqueData: FindOneDto) {

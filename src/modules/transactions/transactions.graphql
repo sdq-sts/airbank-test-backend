@@ -29,10 +29,7 @@ type Transaction {
 }
 
 input UpdateTransactionData {
-  reference: String
-  amount: Float
-  currency: String
-  category: UUID
+  category_id: UUID
 }
 
 input UpdateTransactionInput {

@@ -4,7 +4,7 @@
 
 FROM node:lts-buster-slim AS development
 
-RUN apt-get update && apt-get install libssl-dev ca-certificates -y
+RUN apt-get update && apt-get install libssl-dev ca-certificates procps -y
 WORKDIR /usr/src/app
 
 COPY package*.json yarn.lock ./

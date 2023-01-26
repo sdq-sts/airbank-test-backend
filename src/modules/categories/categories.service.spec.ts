@@ -69,7 +69,7 @@ describe('CategoriesService', () => {
   it('should return a list of categories', async () => {
     const expectedResponse = categoryList;
 
-    expect(await service.findAll()).toEqual(expectedResponse);
+    expect(await service.findAll({})).toEqual(expectedResponse);
   });
 
   it('should return one category', async () => {

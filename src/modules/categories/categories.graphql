@@ -1,6 +1,9 @@
 type Category {
+  id: UUID!
   name: String
   color: String
+  created_at: DateTime!
+  updated_at: DateTime!
 }
 
 input CreateCategoryInput {
@@ -9,7 +12,7 @@ input CreateCategoryInput {
 }
 
 type Query {
-  categories: [Category]!
+  categories(search: String): [Category]!
   category(id: String!): Category
 }
 
