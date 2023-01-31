@@ -29,6 +29,16 @@ Steps to reproduce the **frontend** are [here](https://github.com/sdq-sts/airban
 
 You need to have [Docker](https://www.docker.com/) and `docker-compose` installed in your machine in order to build and run this docker image.
 
+## Repository
+
+First of all is necessary to clone this repository:
+
+```bash
+git clone git@github.com:sdq-sts/airbank-test-backend.git
+```
+
+And after that access the repository folder and follow the steps below.
+
 ## Steps
 
 0. Copy the `.env.example` to `.env`:
